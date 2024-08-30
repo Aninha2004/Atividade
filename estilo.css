@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e89ffa;;
+    color: #343a40;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    background: #ffa3e0;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #ffffff;
+}
+
+button {
+    margin: 10px;
+    width: 200px;
+    background-color: #ff8ef6;
+}
+.btn-rosa-claro:hover {
+    background-color: #b1035a; 
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #ff8ef6;
+    color: #fff;
+    text-align: center;
+}
+h2{
+    background-color: #ff8ef6;
+}
+

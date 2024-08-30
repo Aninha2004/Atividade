@@ -1,0 +1,14 @@
+{
+    "opcoesEstacionamento": [
+        {
+            "nome": "Estacionamento A",
+            "localizacao": "Centro",
+            "preco": 10
+        },
+        {
+            "nome": "Estacionamento B",
+            "localizacao": "Subúrbio",
+            "preco": 5
+        }
+    ]
+}

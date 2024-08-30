@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Estacionamento</title>
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <div id="cabecalho"></div>
+
+    <main class="container">
+        <h1 class="my-4 text-center">Sistema de Estacionamento</h1>
+        
+        <section id="opcoesEstacionamento" class="mb-4">
+            <label for="selectEstacionamento" class="form-label">Escolha um Estacionamento:</label>
+            <select id="selectEstacionamento" class="form-control">
+                <option value="">Selecione um estacionamento</option>
+            </select>
+        </section>
+
+         <!-- Aqui crie o seletor das horas -->
+        <section id="tempoEstacionamento" class="mb-4">
+            <label for="inputHoras" class="form-label">Horas:</label>
+            <select id="inputHoras" class="form-control">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+            </select>
+
+            <!-- Aqui o seletor dos minutos -->
+            <label for="inputMinutos" class="form-label">Minutos:</label>
+            <select id="inputMinutos" class="form-control">
+                <option value="0">0</option>
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+            </select>
+        </section>
+
+        <section id="valorEstacionamento" class="mb-4">
+            <label for="valor" class="form-label">Valor:</label>
+            <input type="text" id="valor" class="form-control" readonly>
+        </section>
+
+        <div class="text-center">
+            <button class="btn btn-light" id="btn-light" onclick="gerarComprovante('json')">Gerar Comprovante</button>
+        </div>
+    </main>
+
+    <div id="rodape"></div>
+
+    <script src="includes/funcoes.js"></script>
+    <script src="script.js"></script>
+    
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+
+        // Configurações do Firebase (substitua com suas credenciais)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD6fJ9g6vOPZ6DVq7BNymSKzJQ2bTCNAWc",
+            authDomain: "sistema-de-estacionament-5efc0.firebaseapp.com",
+            databaseURL: "https://sistema-de-estacionament-5efc0-default-rtdb.firebaseio.com",
+            projectId: "sistema-de-estacionament-5efc0",
+            storageBucket: "sistema-de-estacionament-5efc0.appspot.com",
+            messagingSenderId: "1022827201067",
+            appId: "1:1022827201067:web:09c93276edb35bb6cf206e"
+        };
+
+        // Inicialize o Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // Função para gerar o comprovante
+        function gerarComprovante() {
+            // Obtenha os valores dos campos
+            const estacionamento = document.getElementById('selectEstacionamento').value;
+            const horas = document.getElementById('inputHoras').value;
+            const minutos = document.getElementById('inputMinutos').value;
+            const valor = document.getElementById('valor').value;
+
+            // Verifique se todos os campos estão preenchidos
+            if (!estacionamento || !horas || !minutos || !valor) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            // Dados a serem salvos
+            const dados = {
+                estacionamento,
+                horas,
+                minutos,
+                valor,
+                timestamp: new Date().toISOString() // Adiciona um timestamp para referência
+            };
+
+            // Salvar no Firebase Realtime Database
+            push(ref(database, 'comprovantes'), dados)
+                .then(() => {
+                    alert('Comprovante salvo com sucesso!');
+                })
+                .catch((error) => {
+                    console.error('Erro ao salvar no Firebase:', error);
+                    alert('Ocorreu um erro ao salvar o comprovante.');
+                });
+        }
+
+        // Adiciona o listener ao botão com ID 'btn-light'
+        document.getElementById('btn-light').addEventListener('click', (event) => {
+            event.preventDefault(); // Evita o comportamento padrão do formulário
+            gerarComprovante();
+        });
+    </script>
+    
+    
+</body>
+</html>
